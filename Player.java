@@ -1,13 +1,12 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 	private Room currentRoom;
-	private ArrayList<String> inventory;
-	String Item;
+	List<Itemlist> inventory = new ArrayList<>(); 
 	
 public Player(Room starterRoom) {
 	currentRoom = starterRoom;
-	inventory = new ArrayList<>();
 	//array for the inventory
 }
 
@@ -19,11 +18,17 @@ public void setCurrentRoom(Room newRoom) {
 	currentRoom = newRoom;
 }
 
-public void AddToInventory() {
-	inventory.add(Item);
+public void takeItem(String itemName) {
+	
 }
-public void RemoveFromInventory() {
-	inventory.remove(Item);
+
+public void dropItem() {
+	
 }
+
+public List<Itemlist> getInventory() {
+    return inventory;
+}
+
 	
 }

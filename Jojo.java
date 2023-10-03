@@ -2,18 +2,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Jojo {
+import javax.swing.SwingUtilities;
+
+public class Jojo extends TextGameUI{
 	
 	private Player player;
 	private Map<String, Room> rooms;
+	private Map<Itemlist, Item> items;
 	//still gotta find out how Maps exactly work
 
 	public Jojo() {		
 		rooms = new HashMap<>();
-		player = new Player (null);
-		
+		player = new Player(null);
+		items = new HashMap<>();
 		initializeRooms();
-
+		
 	}
 	
 	private void initializeRooms() {
@@ -34,6 +37,8 @@ public class Jojo {
 		room3.setWest(room2);
 		room5.setWest(room6);
 		room5.setSouth(room2);
+		room6.setEast(room5);
+		
 		
 		rooms.put("Bedroom", room1);
 		rooms.put("MainRoom", room2);
@@ -43,10 +48,10 @@ public class Jojo {
 		rooms.put("Villain", room6);
 		//puts the room in the HashMap?
 		
-		Items Thing = new Items("key", "a golden key");
-		room2.addItem(Thing);
-		
+		Book Book1 = new Book("BookOfPart1", "A Book about some guy Fighting a Vampire");
+		items.put(Itemlist.BookOfPart1, Book1);
 		player.setCurrentRoom(room1);
+		player.inventory.add(Itemlist.BookOfPart1);
 		
 	}
 
@@ -59,21 +64,24 @@ public class Jojo {
 		while(true) {
 			//Displays current Room description
 			System.out.println(player.getCurrentRoom().getDescription());
-			
 			System.out.println("Enter a Command!");
 			String input = scanner.nextLine().toLowerCase(); //convert input to Lowercase
 			
 			if (input.equals("exit")){
-				System.out.println("Goodbye!");
-				break;
+					System.out.println("Goodbye!");
+					break;
 			} else if(input.startsWith("go ")) {
-				String direction = input.substring(3);
-				move(direction);
-			}else if (input.startsWith("take ")) {
-			    String itemName = input.substring(5);
-			    takeItem(itemName);
+					String direction = input.substring(3);
+					move(direction);
+			} else if (input.startsWith("inspect ")) {
+		            String itemName = input.substring(8);
+		            if(player.inventory.contains(Itemlist.BookOfPart1)) {
+		            	items.get(Itemlist.BookOfPart1);
+		            	
+		            }
+		            
 			} else {
-				System.out.println("I dont understand that command");
+					System.out.println("I dont understand that command");
 			}
 		}
 		
@@ -114,12 +122,5 @@ public class Jojo {
 		
 	}
 
-	
-	public void takeItem(String itemName) {
-		
-	}
-	
-	public void dropItem() {
-		
-	}
+
 }
